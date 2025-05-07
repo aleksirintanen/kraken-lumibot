@@ -1,15 +1,28 @@
 from datetime import datetime
+import os
 from lumibot.backtesting import BacktestingBroker, PolygonDataBacktesting
 from lumibot.credentials import IS_BACKTESTING
 from lumibot.strategies import Strategy
 from lumibot.traders import Trader
+from lumibot.brokers import Alpaca
 
 
 class SwingHigh(Strategy):
     parameters = {
-        "symbol" : "X:BTCUSD",
-        "quantity" : 0.00001
+        "symbol": os.getenv("SYMBOL", "X:BTCUSD")
     }
+
+    def initialize(self):
+        self.sleeptime = "30M"
+        self.set_market("24/7")
+        self.vars.data = []
+        self.vars.last_trade_date = None
+        self.vars.rsi_below_threshold = False
+        self.vars.price_below_bb = False
+        self.vars.last_order_price = None
+        self.vars.last_trade_week = None
+        self.vars.last_month = None
+        self.vars.pending_orders = {} 
 
     def get_position_size(self):
         symbol = self.parameters['symbol']
@@ -28,19 +41,7 @@ class SwingHigh(Strategy):
             bb_width = (upper_band - lower_band) / middle_band
             # Reduce position size as volatility increases
             position_percentage *= (1 / (1 + bb_width))
-        return (cash / last_price) * position_percentage
-
-    def initialize(self):
-        self.sleeptime = "30M"
-        self.set_market("24/7")
-        self.vars.data = []
-        self.vars.last_trade_date = None
-        self.vars.rsi_below_threshold = False
-        self.vars.price_below_bb = False
-        self.vars.last_order_price = None
-        self.vars.last_trade_week = None
-        self.vars.last_month = None
-        self.vars.pending_orders = {}  # Track pending orders
+        return (cash / last_price) * position_percentage # Track pending orders
 
     def calculate_rsi(self, prices, period=14):
         if len(prices) < period + 1:
