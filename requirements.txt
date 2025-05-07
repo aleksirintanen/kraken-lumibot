@@ -1,0 +1,5 @@
+lumibot
+fore
+colorama
+pandas_ta
+ta
