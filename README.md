@@ -18,11 +18,22 @@ A trading bot built with Lumibot that uses RSI, Bollinger Bands, and SMA indicat
 
 ## Running with Docker Compose (Recommended)
 
-1. Create a `.env` file with your API credentials (optional):
-```bash
-KRAKEN_API_KEY=your_api_key
-KRAKEN_API_SECRET=your_api_secret
-```
+1. Configure environment variables in `docker-compose.yml`:
+   - API Credentials:
+     - `KRAKEN_API_KEY`: Your Kraken API key
+     - `KRAKEN_API_SECRET`: Your Kraken API secret
+   - Trading Parameters:
+     - `TRADING_SYMBOL`: Trading pair (default: X:BTCUSD)
+     - `POSITION_SIZE_PERCENTAGE`: Position size as percentage (default: 0.1)
+     - `MIN_CASH_BALANCE`: Minimum cash balance to trade (default: 10)
+   - Technical Indicators:
+     - `RSI_PERIOD`: RSI calculation period (default: 14)
+     - `BB_PERIOD`: Bollinger Bands period (default: 20)
+     - `BB_STD_DEV`: Bollinger Bands standard deviation (default: 2)
+     - `SMA_PERIOD`: SMA calculation period (default: 20)
+   - Time Settings:
+     - `TZ`: Timezone (default: UTC)
+     - `SLEEP_TIME`: Trading interval (default: 30M)
 
 2. Start the bot:
 ```bash
@@ -65,7 +76,7 @@ python bot.py
 
 ## Configuration
 
-The bot's parameters can be modified in the `bot.py` file:
+The bot's parameters can be modified in the `bot.py` file or through environment variables in `docker-compose.yml`:
 - Trading symbol
 - Position sizing
 - RSI period
@@ -79,7 +90,7 @@ The bot's parameters can be modified in the `bot.py` file:
 - `bot.py`: Main bot code
 - `requirements.txt`: Python dependencies
 - `Dockerfile`: Docker configuration
-- `docker-compose.yml`: Docker Compose configuration
+- `docker-compose.yml`: Docker Compose configuration with environment variables
 
 ## Backtesting
 

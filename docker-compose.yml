@@ -8,12 +8,28 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./data:/app/data
+    env_file:
+      - .env
     environment:
+      # API Credentials
+      - KRAKEN_API_KEY=your_api_key_here
+      - KRAKEN_API_SECRET=your_api_secret_here
+      
+      # Trading Parameters
+      - TRADING_SYMBOL=X:BTCUSD
+      - POSITION_SIZE_PERCENTAGE=0.1
+      - MIN_CASH_BALANCE=10
+      
+      # Technical Indicators
+      - RSI_PERIOD=14
+      - BB_PERIOD=20
+      - BB_STD_DEV=2
+      - SMA_PERIOD=20
+      
+      # Time Settings
       - TZ=UTC
+      - SLEEP_TIME=30M
       - PYTHONUNBUFFERED=1
-    # Uncomment and modify these if you need to add API keys
-    # - KRAKEN_API_KEY=your_api_key
-    # - KRAKEN_API_SECRET=your_api_secret
     logging:
       driver: "json-file"
       options:
