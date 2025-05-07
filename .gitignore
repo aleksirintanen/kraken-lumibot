@@ -24,8 +24,6 @@ wheels/
 .installed.cfg
 *.egg
 
-logs/
-
 # PyInstaller
 *.manifest
 *.spec
@@ -104,4 +102,8 @@ venv.bak/
 .idea/
 .vscode/
 *.swp
-*.swo 
+*.swo
+
+# Project specific
+logs/
+data/ 

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  trading-bot:
+    build: .
+    container_name: kraken-lumibot
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    environment:
+      - TZ=UTC
+      - PYTHONUNBUFFERED=1
+    # Uncomment and modify these if you need to add API keys
+    # - KRAKEN_API_KEY=your_api_key
+    # - KRAKEN_API_SECRET=your_api_secret
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3" 
